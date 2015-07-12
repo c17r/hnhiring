@@ -1,0 +1,4 @@
+-r default.txt
+
+django-extensions==1.5.2
+Fabric==1.10.1

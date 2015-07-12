@@ -1,0 +1,12 @@
+
+1. create {vYYYYMMDDHHNNSS,vYYYYMMDDHHNNSS/src,vYYYYMMDDHHNNSS/venv}
+2. copy site (minus db) to server
+3. create virtualenv
+4. activate virtualenv
+5. pip install --upgrade -r requirements/default.txt
+6. python manage.py staticsitegen
+7. python manage.py collectstatic --noinput
+8. change symlink
+9. bounce uwsgi
+10. reload nginx
+p

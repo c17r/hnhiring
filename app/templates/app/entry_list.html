@@ -1,0 +1,79 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <title></title>
+        <link rel="stylesheet" href="{% static 'app/css/main.css' %}"/>
+        <script type="text/javascript" src="{% static 'app/js/jquery-1.11.3.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'app/js/jquery.ba-throttle-debounce.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'app/js/highlightRegex.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'app/js/hnhiring.js' %}"></script>
+    </head>
+    <body>
+        <div id="tophat">
+            <ul>
+                <li id="about"><a href="#">About</a></li>
+                <li id="filter"><input type="text" /></li>
+                <li id="months">
+                    <select>
+                        {% for month in months %}
+                        <option value="{{month.id}}" {% if month.id == month_id %}selected{% endif %}>{{ month.name }}</option>
+                        {% endfor %}
+                    </select>
+                </li>
+            </ul>
+        </div>
+        <div id="entries">
+            <ul>
+                {% for entry in object_list %}
+                    <li id="{{ forloop.counter }}" class="entry {% cycle 'row1' 'row2' %}">
+                        <div class="header">
+                            <span class="date">{{ entry.date }}</span>
+                            <span class="link">
+                                <a href="https://news.ycombinator.com/item?id={{ entry.hn_id }}">
+                                    Link
+                                </a>
+                            </span>
+                        </div>
+                        <div class="content">
+                            {{ entry.content | safe }}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div id="about-page">
+            <div class="header"><a href="#">[X]</a></div>
+            <div class="content">
+                Easier way to browser the monthly HackerNews "Who's Hiring" thread:
+                <ul>
+                    <li>New postings are at the top of the list</li>
+                    <li>Only top level posts from the monthly thread are included</li>
+                    <li>Link to the original complete thread</li>
+                    <li>HackerNews only has "humanized" datetime stamps,
+                        we reverse engineer it to an approximate date and time</li>
+                    <li>Regular expressions filtering</li>
+                    <li>Easier to see jobs from previous months</li>
+                </ul>
+                <p>
+                Lots of inspiration from <a href="http://hnhiring.me" target="_blank">hnhiring.me</a>.
+                The biggest complaint I have about that site is it stops scraping after a certain time
+                on the first day of the month.  From running this on my own, new posting are added up
+                until about the 15th of the month.
+                </p>
+                <p>
+                Comments/Questions/Concerns: Hit me up on <a href="http://twitter.com/c17r_" target="_blank">twitter</a>
+                </p>
+            </div>
+        </div>
+    </body>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-63591603-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+</html>
