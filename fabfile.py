@@ -13,13 +13,14 @@ env.uwsgi = "/usr/bin/uwsgi"
 
 @task
 def live():
+    env.env = "live"
     env.hosts = [
         "crow.endrun.org"
     ]
 
 @task
 def deploy():
-    local("pyclean")
+    local('find . \( -name "*.pyc" -or -name "*.pyo" -or -name "*py.class" \) -delete')
 
     local("tar cf %(stamptar)s app/" % env)
     local("tar rf %(stamptar)s project/" % env)
@@ -39,11 +40,11 @@ def deploy():
 
         with cd("/home/hiring/django/%(stamp)s/" % env):
             sudo("tar xfz /tmp/%(stampzip)s -C ./src/" % env)
-            sudo("rm /tmp/%(stampzip)s" % env)
+            sudo("perl -pi -e 's/development/%(env)s/ig' src/manage.py" % env)
             sudo("virtualenv venv")
 
             with path("./venv/bin", behavior="prepend"):
-                sudo("pip install -r ./src/requirements/default.txt")
+                sudo("pip install --quiet --no-cache-dir -r ./src/requirements/default.txt")
                 sudo("python src/manage.py migrate")
                 sudo("python src/manage.py collectstatic --noinput")
                 sudo("python src/manage.py staticsitegen")
@@ -52,5 +53,7 @@ def deploy():
             sudo("ln -nsf $(basename $(readlink -f current)) previous")
             sudo("ln -nsf %(stamp)s current" % env)
 
-    sudo("%(uwsgi)s --reload /etc/uwsgi/apps-enabled/hnhiring.c17r.org.ini" % env)
+    sudo("touch /var/run/uwsgi/app/hnhiring.c17r.com/reload" % env)
     sudo("%(nginx)s -s reload" % env)
+
+    sudo("rm /tmp/%(stampzip)s" % env)
