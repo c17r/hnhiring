@@ -33,14 +33,52 @@ $(document).on('ready', function() {
 
     });
 
-    $('#filter input').on('keyup', $.debounce(250, filterWords));
+    $('#filter #clear_all').on('click', function(e) {
+        e.preventDefault()
 
-    function filterWords(e) {
+        $('#filter input').val('');
+        $("#filters ul").empty();
+
+        filterWords();
+    });
+
+    $('#filter #add_filter').on('click', addFilter);
+    $('#filter input').on('keyup', function(e) {
+        if (e.keyCode == 13)
+            addFilter(e);
+    });
+
+    function addFilter(e) {
         e.preventDefault();
 
-        var needleVal = $(this).val(),
-            needle = new RegExp(needleVal, "gi"),
+        var $input = $('#filter input'),
+            filter = $input.val(),
+            $li = $('<li/>');
+
+        $li.attr('data', filter)
+        $li.html("&nbsp;<button class='remove_filter'>-</button>&nbsp;" + filter)
+        $('#filters ul').append($li)
+
+        $input.val('');
+
+        filterWords();
+    }
+
+    $('#filters ul').on('click', '.remove_filter', function(e) {
+        e.preventDefault();
+
+        $(this).parents("li").remove()
+        filterWords();
+    });
+
+    function filterWords() {
+        var needles = [],
             cssClass = 'row1';
+
+        $('#filters ul li').each(function(idx, li) {
+            $li = $(li)
+            needles.push(new RegExp($li.attr('data'), 'gi'));
+        });
 
         $("#entries ul li:visible .content").highlightRegex();
 
@@ -50,7 +88,13 @@ $(document).on('ready', function() {
             elem.removeClass('row1');
             elem.removeClass('row2');
 
-            if (needle.test(text)) {
+            var found = true;
+            $.each(needles, function(i, needle) {
+                if (!needle.test(text))
+                    found = false
+            });
+
+            if (found) {
                 elem.show();
                 elem.addClass(cssClass);
                 cssClass = (cssClass == 'row1') ? 'row2' : 'row1';
@@ -60,8 +104,9 @@ $(document).on('ready', function() {
 
         });
 
-        $("#entries ul li:visible .content").highlightRegex(needle);
-
+        $.each(needles, function(idx, needle) {
+            $("#entries ul li:visible .content").highlightRegex(needle);
+        });
     }
 
 });

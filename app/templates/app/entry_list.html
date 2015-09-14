@@ -12,7 +12,11 @@
         <div id="tophat">
             <ul>
                 <li id="about"><a href="#">About</a></li>
-                <li id="filter"><input type="text" /></li>
+                <li id="filter">
+                    <input type="text" />
+                    &nbsp;<button id="add_filter">+</button>
+                    &nbsp;<button id="clear_all">Clear All</button>
+                </li>
                 <li id="months">
                     <select>
                         {% for month in months %}
@@ -20,6 +24,10 @@
                         {% endfor %}
                     </select>
                 </li>
+            </ul>
+        </div>
+        <div id="filters">
+            <ul>
             </ul>
         </div>
         <div id="entries">

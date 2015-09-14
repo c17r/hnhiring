@@ -42,8 +42,11 @@ body {
     left: 100px;
 }
 
+#filters ul li {
+    font-size: 1.6em;
+}
+
 #entries {
-    position: absolute;
     left: 0px;
     top: 40px;
     right: 0;
