@@ -97,6 +97,7 @@ body {
     width: 50%;
     font-size: 2em;
     display: none;
+    border: 1px #000 solid;
 }
 #about-page .header {
     text-align: left;
