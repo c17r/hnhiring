@@ -22,9 +22,9 @@ def live():
 def deploy():
     local('find . \( -name "*.pyc" -or -name "*.pyo" -or -name "*py.class" \) -delete')
 
-    local("tar cf %(stamptar)s app/" % env)
+    local("tar cf %(stamptar)s _requirements/" % env)
+    local("tar rf %(stamptar)s app/" % env)
     local("tar rf %(stamptar)s project/" % env)
-    local("tar rf %(stamptar)s requirements/" % env)
     local("tar rf %(stamptar)s manage.py" % env)
     local("gzip %(stamptar)s" % env)
 
@@ -44,7 +44,7 @@ def deploy():
             sudo("virtualenv venv")
 
             with path("./venv/bin", behavior="prepend"):
-                sudo("pip install --quiet --no-cache-dir -r ./src/requirements/default.txt")
+                sudo("pip install --quiet --no-cache-dir -r ./src/_requirements/default.txt")
                 sudo("python src/manage.py migrate")
                 sudo("python src/manage.py collectstatic --noinput")
                 sudo("python src/manage.py staticsitegen")

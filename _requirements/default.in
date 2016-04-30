@@ -1,0 +1,4 @@
+django<1.9
+django-medusa<0.4.0
+requests
+beautifulsoup4
