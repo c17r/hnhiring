@@ -19,8 +19,12 @@
                 </li>
                 <li id="months">
                     <select>
-                        {% for month in months %}
-                        <option value="{{month.id}}" {% if month.id == month_id %}selected{% endif %}>{{ month.name }}</option>
+                        {% for year, month_list in months.iteritems %}
+                        <optgroup label="{{year}}">
+                            {% for name, id in month_list %}
+                            <option value="{{id}}" {% if id == month_id %}selected{% endif %}>{{ name }}</option>
+                            {% endfor %}
+                        </optgroup>
                         {% endfor %}
                     </select>
                 </li>
