@@ -107,6 +107,21 @@ $(document).on('ready', function() {
         $.each(needles, function(idx, needle) {
             $("#entries ul li:visible .content").highlightRegex(needle);
         });
+
+        updateCounts();
     }
+
+    function updateCounts() {
+        var items = $("#entries ul li"),
+            total = items.length,
+            visible = items.filter("li:visible").length;
+
+        $("#counts").text(visible + "/" + total);
+    }
+
+    function main() {
+        updateCounts();
+    }
+    main();
 
 });
