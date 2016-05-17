@@ -84,21 +84,32 @@ var FilterLibrary = (function($) {
 var contents = [];
 
 $(document).on('ready', function() {
-    
-    $('#about a').on('click', function(e) {
+
+    var $topHat = $('#tophat'),
+        $about = $topHat.find('#about'),
+        $aboutPage = $('#about-page'),
+        $months = $topHat.find('#months'),
+        $filter = $topHat.find('#filter'),
+        $filters = $('#filters'),
+        $filterList = $filters.find('ul'),
+        $entries = $('#entries'),
+        $entriesList = $entries.find('ul'),
+        $counts = $('#counts');
+
+    $about.find('a').on('click', function(e) {
         e.preventDefault();
 
-        $('#about-page').toggle();
+        $aboutPage.toggle();
 
     });
 
-    $('#about-page .header a').on('click', function(e) {
+    $aboutPage.find('.header a').on('click', function(e) {
         e.preventDefault();
 
-        $('#about-page').hide();
+        $aboutPage.hide();
     });
 
-    $('#months select').on('change', function(e) {
+    $months.find('select').on('change', function(e) {
         e.preventDefault();
 
         var monthId = $(this).val();
@@ -106,29 +117,29 @@ $(document).on('ready', function() {
 
     });
 
-    $('#filter #clear_all').on('click', function(e) {
+    $filter.find('#clear_all').on('click', function(e) {
         e.preventDefault();
 
-        $('#filter input').val('');
+        $filter.find('input').val('');
         filters.clear();
     });
 
-    $('#filter #add_filter').on('click', processAdd);
-    $('#filter input').on('keyup', function(e) {
+    $filter.find('#add_filter').on('click', processAdd);
+    $filter.find('input').on('keyup', function(e) {
         if (e.keyCode == 13)
             processAdd(e);
     });
     function processAdd(e) {
         e.preventDefault();
 
-        var $input = $('#filter input'),
+        var $input = $filter.find('input'),
             filter = $input.val();
 
         $input.val('');
         filters.add(filter);
     }
 
-    $('#filters ul').on('click', '.remove_filter', function(e) {
+    $filterList.on('click', '.remove_filter', function(e) {
         e.preventDefault();
 
         var remove = $(this).parents("li").attr('data');
@@ -145,11 +156,11 @@ $(document).on('ready', function() {
 
         $li.attr('data', text);
         $li.html("&nbsp;<button class='remove_filter'>-</button>&nbsp;" + text);
-        $('#filters ul').append($li);
+        $filterList.append($li);
     }
 
     function removeFilter(text) {
-        $('#filters ul li').each(function(idx, li) {
+        $filterList.find('li').each(function(idx, li) {
             var $li = $(li),
                 data = $li.attr('data');
 
@@ -168,7 +179,7 @@ $(document).on('ready', function() {
            needles.push(new RegExp(text, 'gi')); 
         });
         
-        $("#entries ul li:visible .content").highlightRegex();
+        $entriesList.find("li:visible .content").highlightRegex();
 
         $.each(contents, function(idx, text) {
 
@@ -193,18 +204,18 @@ $(document).on('ready', function() {
         });
 
         $.each(needles, function(idx, needle) {
-            $("#entries ul li:visible .content").highlightRegex(needle);
+            $entriesList.find("li:visible .content").highlightRegex(needle);
         });
 
         updateCounts();
     }
 
     function updateCounts() {
-        var items = $("#entries ul li"),
+        var items = $entriesList.find("li"),
             total = items.length,
             visible = items.filter("li:visible").length;
 
-        $("#counts").text(visible + "/" + total);
+        $counts.text(visible + "/" + total);
     }
 
     function main() {
