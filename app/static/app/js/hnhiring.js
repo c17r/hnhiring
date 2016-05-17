@@ -69,7 +69,7 @@ var FilterLibrary = (function($) {
         function getStorage() {
             var storage = $.localStorage;
             if (storage.isEmpty('filters'))
-                filters = []
+                filters = [];
             else
                 filters = storage.get('filters');
         }
@@ -107,7 +107,7 @@ $(document).on('ready', function() {
     });
 
     $('#filter #clear_all').on('click', function(e) {
-        e.preventDefault()
+        e.preventDefault();
 
         $('#filter input').val('');
         filters.clear();
@@ -208,7 +208,7 @@ $(document).on('ready', function() {
     }
 
     function main() {
-        $('#entries ul li').each(function(li) {
+        $entriesList.find('li').each(function() {
 
                 var id = $(this).attr('id'),
                     content = $(this).find('.content')[0].innerText;
