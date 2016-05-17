@@ -74,10 +74,12 @@ def get_data(hn_id):
         if len(entry.contents) > 0:
             continue
         item = entry.parent.find_next_sibling("td", {"class": "default"})
-        if '[deleted]' in str(item):
+        links = item.find_all("a")
+
+        #No links AT ALL means [flagged], [dupe], [dead], [deleted], etc
+        if len(links) == 0:
             continue
-        if '[flagged]' in str(item):
-            continue
+
         perma_link = item.find_all("a")[1]
         date = _human_to_date(perma_link.text)
         perma_id = _id_re.findall(perma_link["href"])[0]
