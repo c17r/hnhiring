@@ -41,7 +41,7 @@ def deploy():
         with cd("/home/hiring/django/%(stamp)s/" % env):
             sudo("tar xfz /tmp/%(stampzip)s -C ./src/" % env)
             sudo("perl -pi -e 's/development/%(env)s/ig' src/manage.py" % env)
-            sudo("virtualenv venv")
+            sudo("virtualenv venv -p $(pyenv prefix 2.7.11)/bin/python")
 
             with path("./venv/bin", behavior="prepend"):
                 sudo("pip install --quiet --no-cache-dir -r ./src/_requirements/default.txt")
