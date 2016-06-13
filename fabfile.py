@@ -34,11 +34,11 @@ def deploy():
 
     with settings(sudo_user="hiring"):
 
-        with cd("/home/hiring/django"):
+        with cd("/home/hiring/web"):
             sudo("mkdir -p %(stamp)s/src" % env)
             sudo("mkdir -p %(stamp)s/venv" % env)
 
-        with cd("/home/hiring/django/%(stamp)s/" % env):
+        with cd("/home/hiring/web/%(stamp)s/" % env):
             sudo("tar xfz /tmp/%(stampzip)s -C ./src/" % env)
             sudo("perl -pi -e 's/development/%(env)s/ig' src/manage.py" % env)
 
@@ -51,7 +51,7 @@ def deploy():
                 sudo("python src/manage.py collectstatic --noinput")
                 sudo("python src/manage.py staticsitegen")
 
-        with cd("/home/hiring/django"):
+        with cd("/home/hiring/web"):
             sudo("ln -nsf $(basename $(readlink -f current)) previous")
             sudo("ln -nsf %(stamp)s current" % env)
 
