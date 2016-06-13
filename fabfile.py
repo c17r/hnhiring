@@ -1,5 +1,5 @@
 from datetime import datetime
-from fabric.api import task, env, settings, cd, sudo, run, local, put, path
+from fabric.api import task, env, settings, cd, sudo, run, local, put, path, shell_env
 
 stamp = datetime.now().strftime("v%Y%m%d%H%M%S")
 stamptar = "hnhiring-" + stamp + ".tar"
