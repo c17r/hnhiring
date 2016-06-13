@@ -9,7 +9,7 @@ env.stamp = stamp
 env.stamptar = stamptar
 env.stampzip = stampzip
 env.nginx = "/usr/sbin/nginx"
-env.uwsgi = "/usr/bin/uwsgi"
+env.supervisor = "/usr/bin/supervisorctl"
 
 @task
 def live():
@@ -26,6 +26,7 @@ def deploy():
     local("tar rf %(stamptar)s app/" % env)
     local("tar rf %(stamptar)s project/" % env)
     local("tar rf %(stamptar)s manage.py" % env)
+    local("tar rf %(stamptar)s gunicorn.conf.py" % env)
     local("gzip %(stamptar)s" % env)
 
     put(stampzip, "/tmp/%(stampzip)s" % env)
@@ -46,7 +47,7 @@ def deploy():
                 sudo("virtualenv venv -p $(pyenv prefix 2.7.11)/bin/python")
 
             with path("./venv/bin", behavior="prepend"):
-                sudo("pip install --quiet --no-cache-dir -r ./src/_requirements/default.txt")
+                sudo("pip install --quiet --no-cache-dir -r ./src/_requirements/deploy.txt")
                 sudo("python src/manage.py migrate")
                 sudo("python src/manage.py collectstatic --noinput")
                 sudo("python src/manage.py staticsitegen")
@@ -55,7 +56,7 @@ def deploy():
             sudo("ln -nsf $(basename $(readlink -f current)) previous")
             sudo("ln -nsf %(stamp)s current" % env)
 
-    sudo("touch /var/run/uwsgi/app/hnhiring.c17r.com/reload" % env)
+    sudo("%(supervisor)s restart hnhiring" % env)
     sudo("%(nginx)s -s reload" % env)
 
     sudo("rm /tmp/%(stampzip)s" % env)
