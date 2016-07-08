@@ -73,16 +73,25 @@ def get_data(hn_id):
     for entry in soup.find_all("img", {"src": "s.gif", "width": 0}):
         if len(entry.contents) > 0:
             continue
-        item = entry.parent.find_next_sibling("td", {"class": "default"})
+        
+        row = entry.findParent("tr", {"class": "athing"})
+        row_id = row["id"]
+        item = row.select("td.default")[0]
         links = item.find_all("a")
 
         #No links AT ALL means [flagged], [dupe], [dead], [deleted], etc
+        if not row.select("a#up_" + row_id):
+            continue
         if len(links) == 0:
             continue
 
-        perma_link = item.find_all("a")[1]
+        perma_link = links[1]
         date = _human_to_date(perma_link.text)
         perma_id = _id_re.findall(perma_link["href"])[0]
-        item.find("span", {"class": "comment"}).find("span").find("div").decompose()
+        try:
+            item.find("span", {"class": "comment"}).find("span").find("div").decompose()
+        except Exception as e:
+            print(str(item))
+            raise
         text = str(item.find("span", {"class": "comment"}).find("span"))
         yield perma_id, text, date
