@@ -60,3 +60,9 @@ def deploy():
     sudo("%(nginx)s -s reload" % env)
 
     sudo("rm /tmp/%(stampzip)s" % env)
+
+@task
+def prune()
+    with settings(sudo_user="hiring"):
+        with cd("/home/hiring/web"):
+            sudo('[ -h current ] && $(for dir in $(ls -1f | grep -e "/$" | grep -ve "$(readlink previous)\|$(readlink current)"); do rm -r $dir; done) || true')
