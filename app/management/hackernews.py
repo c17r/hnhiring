@@ -95,3 +95,11 @@ def get_data(hn_id):
             raise
         text = str(item.find(class_='comment').find("span"))
         yield perma_id, text, date
+
+
+def get_entry_datetime(hn_id):
+    r = requests.get("https://hacker-news.firebaseio.com/v0/item/{}.json".format(hn_id))
+    r.raise_for_status()
+    data = r.json()
+    dt = datetime.fromtimestamp(int(data['time']))
+    return dt.strftime("%Y-%m-%d %H:%M:%S")
