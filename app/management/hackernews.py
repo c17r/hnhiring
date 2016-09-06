@@ -89,9 +89,9 @@ def get_data(hn_id):
         date = _human_to_date(perma_link.text)
         perma_id = _id_re.findall(perma_link["href"])[0]
         try:
-            item.find("span", {"class": "comment"}).find("span").find("div").decompose()
+            item.find(class_='comment').find("span").find("div").decompose()
         except Exception as e:
             print(str(item))
             raise
-        text = str(item.find("span", {"class": "comment"}).find("span"))
+        text = str(item.find(class_='comment').find("span"))
         yield perma_id, text, date
