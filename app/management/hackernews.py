@@ -132,3 +132,17 @@ def get_entry_datetime(hn_id):
     data = r.json()
     dt = datetime.fromtimestamp(int(data['time']))
     return dt.strftime("%Y-%m-%d %H:%M:%S")
+
+
+@retry(times=5, errors=(requests.exceptions.RequestException, ))
+def process_job_feed():
+    r = requests.get('https://hacker-news.firebaseio.com/v0/jobstories.json')
+    r.raise_for_status()
+    data = r.json()
+    for job_id in data:
+        j = requests.get("https://hacker-news.firebaseio.com/v0/item/{}.json".format(job_id))
+        j.raise_for_status()
+        job_data = j.json()
+        job_data['time'] = datetime.fromtimestamp(int(job_data['time']))
+        job_data['time_db'] = job_data['time'].strftime('%Y-%m-%d %H:%M:%S')
+        yield job_data
