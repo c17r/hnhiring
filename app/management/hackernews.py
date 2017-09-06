@@ -1,7 +1,11 @@
 import re
+import time
 from datetime import timedelta, datetime
+from functools import wraps
+
 import requests
 from bs4 import BeautifulSoup
+
 
 _index_url = "https://news.ycombinator.com/submitted?id="
 _data_url_fragment = "https://news.ycombinator.com/item?id={}&p={}"
@@ -21,6 +25,23 @@ _DELTAS = {
     'year': timedelta(days=365)
 }
 _SINGULARS = ['a ', 'an ', 'just ']
+
+
+def retry(times=-1, delay=0.5, errors=(Exception,)):
+    def decorator(f):
+        @wraps(f)
+        def wrapper(*args, **kwargs):
+            count = 0
+            while True:
+                try:
+                    count = count + 1
+                    return f(*args, **kwargs)
+                except errors as e:
+                    if count == times:
+                        raise e
+                    time.sleep(delay)
+        return wrapper
+    return decorator
 
 
 def _unhumanize(human_time_interval):
@@ -104,6 +125,7 @@ def get_data(hn_id):
             return
 
 
+@retry(times=5, errors=(requests.exceptions.RequestException, ))
 def get_entry_datetime(hn_id):
     r = requests.get("https://hacker-news.firebaseio.com/v0/item/{}.json".format(hn_id))
     r.raise_for_status()
