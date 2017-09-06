@@ -24,7 +24,7 @@
                 </li>
                 <li id="months">
                     <select>
-                        {% for year, month_list in months.iteritems %}
+                        {% for year, month_list in months.items %}
                         <optgroup label="{{year}}">
                             {% for name, id in month_list %}
                             <option value="{{id}}" {% if id == month_id %}selected{% endif %}>{{ name }}</option>

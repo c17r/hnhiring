@@ -5,16 +5,33 @@ SECRET_KEY = 'cz+wa*s4#5eb98ec*ca(9fat^ah96hx67&9=req8^ezgrsjbv-'
 
 DEBUG = True
 
-TEMPLATE_DEBUG = True
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    'testserver'
+]
 
 INTERNAL_IPS = (
     '0.0.0.0',
     '127.0.0.1',
 )
 
-INSTALLED_APPS = (
+PROD_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -22,7 +39,11 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_medusa',
     'app',
-)
+]
+DEV_APPS = [
+    'django_extensions'
+]
+INSTALLED_APPS = PROD_APPS + DEV_APPS
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -34,14 +55,14 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'project.urls'
+ROOT_URLCONF = '_project.urls'
 
-WSGI_APPLICATION = 'project.wsgi.application'
+WSGI_APPLICATION = '_project.wsgi.application'
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'hnhiring.db',
+        'NAME': os.path.join(BASE_DIR, '..', 'db.sqlite3'),
     }
 }
 

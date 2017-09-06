@@ -14,4 +14,5 @@ class MonthRenderer(StaticSiteRenderer):
 
         return paths
 
-renderers = [MonthRenderer,]
+
+renderers = [MonthRenderer, ]

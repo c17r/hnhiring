@@ -1,10 +1,8 @@
-from defaults import *
+from .base import *
 
 DEBUG = False
 
-TEMPLATE_DEBUG = False
-
-WSGI_APPLICATION = 'project.wsgi.live.application'
+INSTALLED_APPS = PROD_APPS
 
 ALLOWED_HOSTS = [
     'hnhiring.endrun.org',

@@ -1,5 +1,4 @@
-from django.core.management.base import BaseCommand, CommandError
-from optparse import make_option
+from django.core.management.base import BaseCommand
 
 import app.management.hackernews as hackernews
 from app.models import Month, Entry
@@ -8,22 +7,9 @@ from app.models import Month, Entry
 class Command(BaseCommand):
     help = "Calls HackerNews to get latest data"
 
-    option_list = BaseCommand.option_list + (
-        make_option(
-            "-u",
-            "--users",
-            action="store",
-            type="string",
-            dest="users",
-            default="whoishiring"
-        ),
-        make_option(
-            "-a",
-            "--all",
-            action="store_true",
-            dest="refresh_all"
-        )
-    )
+    def add_arguments(self, parser):
+        parser.add_argument('-u', '--users', action='store', type=str, dest='users', default='whoishiring')
+        parser.add_argument('-a', '--all', action='store_true', dest='refresh_all')
 
     def handle(self, *args, **options):
         users = options["users"].split(",")
@@ -46,14 +32,16 @@ class Command(BaseCommand):
         total = 0
         existing = 0
         for user in users:
+            print(f'Processing {user}...')
             months = hackernews.get_months(user)
             current = months[0]
-            current_month, _ = Month.objects.get_or_create(
+            current_month, c = Month.objects.get_or_create(
                 name=current[0],
                 defaults={
                     "hn_id": current[1]
                 }
             )
+            print(f'\tProcessing {current_month}...')
             e, t = self.process_entries_for_month(current_month)
             existing += e
             total += t

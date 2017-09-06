@@ -1,5 +1,4 @@
-from django.core.management.base import BaseCommand, CommandError
-from optparse import make_option
+from django.core.management.base import BaseCommand
 
 import app.management.hackernews as hackernews
 from app.models import Month, Entry
@@ -8,15 +7,8 @@ from app.models import Month, Entry
 class Command(BaseCommand):
     help = "Fixes the datetime for entries for a specified month"
 
-    option_list = BaseCommand.option_list + (
-        make_option(
-            "--month",
-            action="store",
-            type=int,
-            dest="month",
-            default=0
-        ),
-    )
+    def add_arguments(self, parser):
+        parser.add_argument("--month", action="store", type=int, dest="month", default=0)
 
     def handle(self, *args, **options):
         month = None

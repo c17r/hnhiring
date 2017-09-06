@@ -1,4 +1,0 @@
--r default.txt
-
-gunicorn<20.0.0
-setproctitle

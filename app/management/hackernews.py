@@ -3,9 +3,8 @@ from datetime import timedelta, datetime
 import requests
 from bs4 import BeautifulSoup
 
-
 _index_url = "https://news.ycombinator.com/submitted?id="
-_data_url_fragment = "https://news.ycombinator.com/item?id="
+_data_url_fragment = "https://news.ycombinator.com/item?id={}&p={}"
 _date_re = re.compile("(\w+ \d{4})")
 _id_re = re.compile("=(\d+)")
 
@@ -67,34 +66,42 @@ def get_months(user=None):
 
 
 def get_data(hn_id):
-    r = requests.get(_data_url_fragment + hn_id)
-    r.raise_for_status()
-    soup = BeautifulSoup(r.text, "html.parser")
-    for entry in soup.find_all("img", {"src": "s.gif", "width": 0}):
-        if len(entry.contents) > 0:
-            continue
-        
-        row = entry.findParent("tr", {"class": "athing"})
-        row_id = row["id"]
-        item = row.select("td.default")[0]
-        links = item.find_all("a")
+    page = 1
+    while True:
+        print(f'\t\tProcessing Page {page}...')
+        r = requests.get(_data_url_fragment.format(hn_id, page))
+        r.raise_for_status()
+        soup = BeautifulSoup(r.text, "html.parser")
+        for thing in soup.find_all('tr', {'class': 'athing'}):
 
-        #No links AT ALL means [flagged], [dupe], [dead], [deleted], etc
-        if not row.select("a#up_" + row_id):
-            continue
-        if len(links) == 0:
-            continue
+            spacer = thing.find('img', {'src': 's.gif', 'width': 0})
+            if spacer is None:
+                continue
 
-        perma_link = links[1]
-        date = _human_to_date(perma_link.text)
-        perma_id = _id_re.findall(perma_link["href"])[0]
-        try:
+            thing_id = thing['id']
+
+            if not thing.select("a#up_" + thing_id):
+                continue
+
+            item = thing.select('td.default')[0]
+            links = item.find_all('a')
+
+            if len(links) == 0:
+                continue
+
+            perma_link = links[1]
+            date = _human_to_date(perma_link.text)
+            perma_id = _id_re.findall(perma_link["href"])[0]
+
             item.find(class_='comment').find("span").find("div").decompose()
-        except Exception as e:
-            print(str(item))
-            raise
-        text = str(item.find(class_='comment').find("span"))
-        yield perma_id, text, date
+            text = str(item.find(class_='comment').find('span'))
+
+            yield perma_id, text, date
+
+        if soup.find('a', {'class': 'morelink'}):
+            page = page + 1
+        else:
+            return
 
 
 def get_entry_datetime(hn_id):

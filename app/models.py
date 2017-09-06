@@ -2,9 +2,9 @@ from django.db import models
 
 
 class Month(models.Model):
-    id = models.IntegerField(
+    id = models.AutoField(
         primary_key=True
-    )  # AutoField?
+    )
     hn_id = models.IntegerField(
         blank=True,
         null=True
@@ -16,11 +16,14 @@ class Month(models.Model):
     class Meta:
         db_table = 'month'
 
+    def __str__(self):
+        return self.name
+
 
 class Entry(models.Model):
-    id = models.IntegerField(
+    id = models.AutoField(
         primary_key=True
-    )  # AutoField?
+    )
     month = models.ForeignKey(
         Month,
         db_column="month_id",
@@ -39,5 +42,3 @@ class Entry(models.Model):
 
     class Meta:
         db_table = 'entry'
-
-
