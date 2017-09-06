@@ -17,7 +17,7 @@ class Command(BaseCommand):
             e, c = Entry.objects.get_or_create(
                 hn_id=job['id'],
                 defaults={
-                    'content': job['title'] + '\n\n' + job['url'] if 'url' in job else job['text'],
+                    'content': self.format_content(job),
                     'date': job['time_db'],
                     'month': Month.objects.get(name=job['time'].strftime('%B %Y')),
                 }
@@ -27,3 +27,15 @@ class Command(BaseCommand):
 
         print(f'   Total: {total}')
         print(f'Existing: {existing}')
+
+    def format_content(self, job):
+        rv = job['title']
+        rv += ('<br/>' * 2)
+        if 'url' in job:
+            rv += '<a href="{0}">{0}</a>'.format(job['url'])
+        else:
+            rv += job['text']
+        rv += ('<br/>' * 2)
+        rv += '[Job Feed]'
+
+        return rv
