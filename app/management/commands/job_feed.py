@@ -15,7 +15,7 @@ class Command(BaseCommand):
             total += 1
 
             month_name = job['time'].strftime('%B %Y')
-            m, _ = Month.objects.get_or_create(name=month_name)
+            m = Month.objects.get_or_create(month_name)
 
             e, c = Entry.objects.get_or_create(
                 hn_id=job['id'],

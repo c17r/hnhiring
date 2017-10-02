@@ -35,12 +35,7 @@ class Command(BaseCommand):
             print(f'Processing {user}...')
             months = hackernews.get_months(user)
             current = months[0]
-            current_month, c = Month.objects.get_or_create(
-                name=current[0],
-                defaults={
-                    "hn_id": current[1]
-                }
-            )
+            current_month = Month.objects.get_or_create(current[0], current[1])
             print(f'\tProcessing {current_month}...')
             e, t = self.process_entries_for_month(current_month)
             existing += e
