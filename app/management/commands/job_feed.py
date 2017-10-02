@@ -14,12 +14,15 @@ class Command(BaseCommand):
         for job in hackernews.process_job_feed():
             total += 1
 
+            month_name = job['time'].strftime('%B %Y')
+            m, _ = Month.objects.get_or_create(name=month_name)
+
             e, c = Entry.objects.get_or_create(
                 hn_id=job['id'],
                 defaults={
                     'content': self.format_content(job),
                     'date': job['time_db'],
-                    'month': Month.objects.get(name=job['time'].strftime('%B %Y')),
+                    'month': m,
                 }
             )
             if not c:
