@@ -6,7 +6,7 @@ DEBUG = False
 INSTALLED_APPS = PROD_APPS
 
 ALLOWED_HOSTS = [
-    '127.0.0.1',
+    'hnhiring.c17r.com',
     'localhost',
     'testserver',  # needed for django_medusa
 ]
