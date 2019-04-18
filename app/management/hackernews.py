@@ -114,7 +114,9 @@ def get_data(hn_id):
             date = _human_to_date(perma_link.text)
             perma_id = _id_re.findall(perma_link["href"])[0]
 
-            item.find(class_='comment').find("span").find("div").decompose()
+            div = item.find(class_='comment').find("span").find("div")
+            if (div):
+                div.decompose()
             text = str(item.find(class_='comment').find('span'))
 
             yield perma_id, text, date

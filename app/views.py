@@ -1,5 +1,6 @@
 from collections import OrderedDict
 
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.views.generic.base import RedirectView
 from django.views.generic.list import ListView
@@ -37,6 +38,7 @@ class MonthView(ListView):
         context = super(MonthView, self).get_context_data(**kwargs)
         context['months'] = self._month_aggregate()
         context['month_id'] = int(self.kwargs['month_id'])
+        context['DEBUG'] = settings.DEBUG
         return context
 
     def get(self, request, *args, **kwargs):
