@@ -1,0 +1,9 @@
+.idea/
+.git/
+.env
+.gitignore
+fabfile.py
+gunicorn.conf.py
+Makefile
+README
+setup.cfg

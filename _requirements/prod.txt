@@ -9,9 +9,7 @@ beautifulsoup4==4.6.0
 certifi==2017.7.27.1      # via requests
 chardet==3.0.4            # via requests
 django==1.11.5
-gunicorn==19.7.1
 idna==2.6                 # via requests
 pytz==2017.2              # via django
 requests==2.18.4
-setproctitle==1.1.10
 urllib3==1.22             # via requests
