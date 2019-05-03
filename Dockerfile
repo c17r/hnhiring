@@ -7,7 +7,6 @@ RUN /venv/bin/pip install --quiet --no-cache-dir -r /requirements.txt
 FROM base AS app
 
 ENV \
-DJANGO_SETTINGS_MODULE=_project.settings.live \
 UWSGI_CHECK_STATIC=/data/cache/ \
 UWSGI_STATIC_MAP="/static/=/code/_project/static/" \
 UWSGI_WSGI_FILE=_project/wsgi.py
