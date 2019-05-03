@@ -2,5 +2,3 @@ django<1.12
 -e git://github.com/alsoicode/django-medusa.git@v0.3.2#egg=django-medusa
 requests
 beautifulsoup4
-gunicorn
-setproctitle
