@@ -1,4 +1,4 @@
-django<1.12
+django<2.0
 -e git://github.com/alsoicode/django-medusa.git@v0.3.2#egg=django-medusa
 requests
 beautifulsoup4
