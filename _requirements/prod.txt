@@ -5,12 +5,12 @@
 #    pip-compile --output-file=_requirements/prod.txt _requirements/prod.in
 #
 -e git+git://github.com/alsoicode/django-medusa.git@v0.3.2#egg=django-medusa
-beautifulsoup4==4.7.1
-certifi==2019.6.16        # via requests
+beautifulsoup4==4.8.0
+certifi==2019.9.11        # via requests
 chardet==3.0.4            # via requests
-django==1.11.22
+django==1.11.24
 idna==2.8                 # via requests
-pytz==2019.1              # via django
+pytz==2019.2              # via django
 requests==2.22.0
-soupsieve==1.9.2          # via beautifulsoup4
+soupsieve==1.9.3          # via beautifulsoup4
 urllib3==1.25.3           # via requests
