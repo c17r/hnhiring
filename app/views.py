@@ -1,7 +1,7 @@
 from collections import OrderedDict
 
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.views.generic.base import RedirectView
 from django.views.generic.list import ListView
 from app.models import Month, Entry

@@ -38,7 +38,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='entry',
             name='month',
-            field=models.ForeignKey(related_name='entries', db_column='month_id', to='app.Month'),
+            field=models.ForeignKey(related_name='entries', db_column='month_id', to='app.Month', on_delete=models.deletion.CASCADE),
             preserve_default=True,
         ),
     ]

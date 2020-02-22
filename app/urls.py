@@ -1,17 +1,17 @@
-from django.conf.urls import url
+from django.urls import path
 
 from app import views
 
 
-urlpatterns = [
-    url(
-        r"^$",
+urlpatterns = (
+    path(
+        '',
         views.HomepageView.as_view(),
-        name="app-homepage"
+        name='app-homepage'
     ),
-    url(
-        r"^month/(?P<month_id>[0-9]+)$",
+    path(
+        'month/<int:month_id>',
         views.MonthView.as_view(),
-        name="app-month"
+        name='app-month'
     )
-]
+)
