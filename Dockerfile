@@ -9,7 +9,8 @@ FROM base AS app
 ENV \
 UWSGI_CHECK_STATIC=/data/cache/ \
 UWSGI_STATIC_MAP="/static/=/code/_project/static/" \
-UWSGI_WSGI_FILE=_project/wsgi.py
+UWSGI_WSGI_FILE=_project/wsgi.py \
+DJANGO_SETTINGS_MODULE=_project.settings.live
 
 WORKDIR /code/
 ADD . /code/
