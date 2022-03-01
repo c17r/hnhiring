@@ -1,4 +1,9 @@
+import os
 import sys
+
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
 from .base import *
 
 DEBUG = False
@@ -38,3 +43,11 @@ LOGGING = {
 }
 
 MEDUSA_DEPLOY_DIR="/data/cache"
+
+sentry_sdk.init(
+    dsn="https://4e77834d874b4a8fb0b2153feb49c82d@o105229.ingest.sentry.io/6238005",
+    integrations=[DjangoIntegration()],
+
+    traces_sample_rate=1.0,
+    send_default_pii=True
+)

@@ -1,5 +1,6 @@
 .idea/
 .git/
+src/
 .env
 .gitignore
 fabfile.py

@@ -1,4 +1,8 @@
 import os
+
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 SECRET_KEY = 'cz+wa*s4#5eb98ec*ca(9fat^ah96hx67&9=req8^ezgrsjbv-'
@@ -90,3 +94,5 @@ MEDUSA_DEPLOY_DIR = os.path.join(
     "static",
     "pages"
 )
+
+sentry_sdk.init()
