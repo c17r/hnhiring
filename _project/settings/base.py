@@ -5,7 +5,7 @@ from sentry_sdk.integrations.django import DjangoIntegration
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-SECRET_KEY = 'cz+wa*s4#5eb98ec*ca(9fat^ah96hx67&9=req8^ezgrsjbv-'
+SECRET_KEY = 'nobody-cares-its-for-test-only'
 
 DEBUG = True
 
