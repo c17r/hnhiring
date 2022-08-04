@@ -16,3 +16,6 @@ db-reset:
 	./manage.py makemigrations
 	./manage.py migrate
 	./manage.py refresh_data
+
+statics:
+	./manage.py staticsitegen

@@ -88,7 +88,7 @@ STATIC_ROOT = os.path.join(
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
 MEDUSA_RENDERER_CLASS = "django_medusa.renderers.DiskStaticSiteRenderer"
-MEDUSA_MULTITHREAD = True
+MEDUSA_MULTITHREAD = False
 MEDUSA_DEPLOY_DIR = os.path.join(
     BASE_DIR,
     "static",
