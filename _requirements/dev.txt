@@ -4,40 +4,42 @@
 #
 #    pip-compile --output-file=_requirements/dev.txt _requirements/dev.in _requirements/prod.in
 #
--e git+git://github.com/alsoicode/django-medusa.git@v0.3.2#egg=django-medusa
+-e git+https://github.com/alsoicode/django-medusa.git@v0.3.2#egg=django-medusa
     # via -r _requirements/prod.in
-asgiref==3.5.0
+asgiref==3.5.2
     # via django
-beautifulsoup4==4.10.0
+beautifulsoup4==4.11.1
     # via -r _requirements/prod.in
-certifi==2021.10.8
+certifi==2022.6.15
     # via
     #   requests
     #   sentry-sdk
-charset-normalizer==2.0.12
+charset-normalizer==2.1.0
     # via requests
-django==3.2.12
+django==3.2.15
     # via
     #   -r _requirements/prod.in
     #   django-extensions
     #   django-medusa
-django-extensions==3.1.5
+django-extensions==3.2.0
     # via -r _requirements/dev.in
 idna==3.3
     # via requests
-pytz==2021.3
+markupsafe==2.1.1
+    # via werkzeug
+pytz==2022.1
     # via django
-requests==2.27.1
+requests==2.28.1
     # via -r _requirements/prod.in
-sentry-sdk==1.5.6
+sentry-sdk==1.9.0
     # via -r _requirements/prod.in
-soupsieve==2.3.1
+soupsieve==2.3.2.post1
     # via beautifulsoup4
 sqlparse==0.4.2
     # via django
-urllib3==1.26.8
+urllib3==1.26.11
     # via
     #   requests
     #   sentry-sdk
-werkzeug==2.0.3
+werkzeug==2.2.1
     # via -r _requirements/dev.in
