@@ -77,7 +77,7 @@ def get_months(user=None):
     r = requests.get(_index_url + user)
     r.raise_for_status()
     soup = BeautifulSoup(r.text, "html.parser")
-    links = soup.select("td.title > a")
+    links = soup.select("td.title > span > a")
     hiring = [
         (_date_re.findall(i.text)[0], _id_re.findall(i["href"])[0])
         for i in links
