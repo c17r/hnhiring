@@ -145,6 +145,7 @@ def process_job_feed():
         j = requests.get("https://hacker-news.firebaseio.com/v0/item/{}.json".format(job_id))
         j.raise_for_status()
         job_data = j.json()
-        job_data['time'] = datetime.fromtimestamp(int(job_data['time']))
-        job_data['time_db'] = job_data['time'].strftime('%Y-%m-%d %H:%M:%S')
-        yield job_data
+        if job_data is not None:
+            job_data['time'] = datetime.fromtimestamp(int(job_data['time']))
+            job_data['time_db'] = job_data['time'].strftime('%Y-%m-%d %H:%M:%S')
+            yield job_data
