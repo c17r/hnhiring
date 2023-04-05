@@ -8,6 +8,11 @@ reqs:
 	pip-compile -U -o _requirements/dev.txt _requirements/prod.in _requirements/dev.in
 	pip-sync _requirements/dev.txt
 
+notebook:
+	pushd _jupyter
+	jupyter-notebook
+	popd
+
 server:
 	./manage.py runserver_plus
 
