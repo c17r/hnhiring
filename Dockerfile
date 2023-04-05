@@ -15,7 +15,7 @@ DJANGO_SETTINGS_MODULE=_project.settings.live
 WORKDIR /code/
 ADD . /code/
 
-RUN DJANGO_SECRET_KEY=build /venv/bin/python manage.py collectstatic --noinput \
+RUN DJANGO_SECRET_KEY=build SENTRY_DSN=build /venv/bin/python manage.py collectstatic --noinput \
 && (crontab -l | { cat; echo "*/30 * * * * /code/periodic/update.sh > /data/logs/cron.log 2>&1"; } | crontab -)
 
 ENTRYPOINT ["/code/docker-entry.sh"]
