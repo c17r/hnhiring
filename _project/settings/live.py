@@ -8,7 +8,7 @@ from .base import *
 
 DEBUG = False
 
-SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 INSTALLED_APPS = PROD_APPS
 
@@ -46,10 +46,11 @@ LOGGING = {
 
 MEDUSA_DEPLOY_DIR="/data/cache"
 
-sentry_sdk.init(
-    dsn=os.environ['SENTRY_DSN'],
-    integrations=[DjangoIntegration()],
+if os.environ.get('SENTRY_DSN'):
+    sentry_sdk.init(
+        dsn=os.environ['SENTRY_DSN'],
+        integrations=[DjangoIntegration()],
 
-    traces_sample_rate=1.0,
-    send_default_pii=True
-)
+        traces_sample_rate=1.0,
+        send_default_pii=True
+    )
