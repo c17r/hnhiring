@@ -64,8 +64,6 @@ fastjsonschema==2.17.1
     # via nbformat
 fqdn==1.5.1
     # via jsonschema
-hackernews-python==0.3.2
-    # via -r _requirements/prod.in
 idna==3.4
     # via
     #   anyio
@@ -116,7 +114,7 @@ jupyter-core==5.3.1
     #   notebook
 jupyter-events==0.6.3
     # via jupyter-server
-jupyter-server==2.6.0
+jupyter-server==2.7.0
     # via
     #   nbclassic
     #   notebook-shim
@@ -218,9 +216,7 @@ pyzmq==25.1.0
     #   nbclassic
     #   notebook
 requests==2.31.0
-    # via
-    #   -r _requirements/prod.in
-    #   hackernews-python
+    # via -r _requirements/prod.in
 rfc3339-validator==0.1.4
     # via
     #   jsonschema

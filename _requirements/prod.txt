@@ -20,16 +20,12 @@ django==3.2.19
     # via
     #   -r _requirements/prod.in
     #   django-medusa
-hackernews-python==0.3.2
-    # via -r _requirements/prod.in
 idna==3.4
     # via requests
 pytz==2023.3
     # via django
 requests==2.31.0
-    # via
-    #   -r _requirements/prod.in
-    #   hackernews-python
+    # via -r _requirements/prod.in
 sentry-sdk==1.26.0
     # via -r _requirements/prod.in
 soupsieve==2.4.1
