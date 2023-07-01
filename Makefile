@@ -9,9 +9,7 @@ reqs:
 	pip-sync _requirements/dev.txt
 
 notebook:
-	pushd _jupyter
-	jupyter-notebook
-	popd
+	pushd _jupyter && jupyter-notebook && popd
 
 server:
 	./manage.py runserver_plus

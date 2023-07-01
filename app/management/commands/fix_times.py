@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-import app.management.hackernews as hackernews
+from app.management import algolia as api
 from app.models import Month, Entry
 
 
@@ -18,5 +18,5 @@ class Command(BaseCommand):
             month = Month.objects.get(id=options["month"])
 
         for entry in Entry.objects.filter(month=month):
-            dt = hackernews.get_entry_datetime(entry.hn_id)
+            dt = api.get_entry_datetime(entry.hn_id)
             Entry.objects.filter(id=entry.id).update(date=dt)

@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from app.management import hackernews
+from app.management import algolia as api
 from app.models import Month, Entry
 
 
@@ -11,7 +11,7 @@ class Command(BaseCommand):
         total = 0
         existing = 0
 
-        for job in hackernews.process_job_feed():
+        for job in api.process_job_feed():
             total += 1
 
             month_name = job['time'].strftime('%B %Y')
@@ -21,7 +21,7 @@ class Command(BaseCommand):
                 hn_id=job['id'],
                 defaults={
                     'content': self.format_content(job),
-                    'date': job['time_db'],
+                    'date': job['time'],
                     'month': m,
                 }
             )
@@ -31,7 +31,7 @@ class Command(BaseCommand):
         print(f'   Total: {total}')
         print(f'Existing: {existing}')
 
-    def format_content(self, job):
+    def format_content(self, job: dict) -> str:
         rv = job['title']
         rv += ('<br/>' * 2)
         if 'url' in job:

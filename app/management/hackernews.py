@@ -1,7 +1,8 @@
 import re
 import time
-from datetime import timedelta, datetime
+from datetime import timedelta, datetime, timezone
 from functools import wraps
+from typing import List, Tuple, Iterator, Optional, Union
 
 import requests
 from bs4 import BeautifulSoup
@@ -9,8 +10,8 @@ from bs4 import BeautifulSoup
 
 _index_url = "https://news.ycombinator.com/submitted?id="
 _data_url_fragment = "https://news.ycombinator.com/item?id={}&p={}"
-_date_re = re.compile("(\w+ \d{4})")
-_id_re = re.compile("=(\d+)")
+_date_re = re.compile(r"(\w+ \d{4})")
+_id_re = re.compile(r"=(\d+)")
 
 _DELTAS = {
     'now': timedelta(seconds=0),
@@ -44,7 +45,7 @@ def retry(times=-1, delay=0.5, errors=(Exception,)):
     return decorator
 
 
-def _unhumanize(human_time_interval):
+def _unhumanize(human_time_interval: str) -> Union[timedelta, None]:
     """Converts human_time_interval (e.g. 'an hour ago') into a
     datetime.timedelta.
     """
@@ -66,12 +67,12 @@ def _unhumanize(human_time_interval):
         return None
 
 
-def _human_to_date(string):
+def _human_to_date(string: str) -> datetime:
     td = _unhumanize(string)
-    return (datetime.now() + td).strftime("%Y-%m-%d %H:%M:%S")
+    return (datetime.now() + td) if td is not None else datetime.now()
 
 
-def get_months(user=None):
+def get_months(user: Optional[str] = None) -> List[Tuple[str, str]]:
     if user is None:
         user = "whoishiring"
     r = requests.get(_index_url + user)
@@ -86,7 +87,7 @@ def get_months(user=None):
     return hiring
 
 
-def get_data(hn_id):
+def get_data(hn_id: int) -> Iterator[Tuple[int, str, datetime]]:
     page = 1
     while True:
         print(f'\t\tProcessing Page {page}...')
@@ -115,11 +116,11 @@ def get_data(hn_id):
             perma_id = _id_re.findall(perma_link["href"])[0]
 
             div = item.find(class_='comment').find("span").find("div")
-            if (div):
+            if div:
                 div.decompose()
             text = str(item.find(class_='comment').find('span'))
 
-            yield perma_id, text, date
+            yield int(perma_id), text, date
 
         if soup.find('a', {'class': 'morelink'}):
             page = page + 1
@@ -128,16 +129,15 @@ def get_data(hn_id):
 
 
 @retry(times=5, errors=(requests.exceptions.RequestException, ))
-def get_entry_datetime(hn_id):
+def get_entry_datetime(hn_id: int) -> datetime:
     r = requests.get("https://hacker-news.firebaseio.com/v0/item/{}.json".format(hn_id))
     r.raise_for_status()
     data = r.json()
-    dt = datetime.fromtimestamp(int(data['time']))
-    return dt.strftime("%Y-%m-%d %H:%M:%S")
+    return datetime.fromtimestamp(int(data['time']), tz=timezone.utc)
 
 
 @retry(times=5, errors=(requests.exceptions.RequestException, ))
-def process_job_feed():
+def process_job_feed() -> Iterator[dict]:
     r = requests.get('https://hacker-news.firebaseio.com/v0/jobstories.json')
     r.raise_for_status()
     data = r.json()
@@ -146,6 +146,5 @@ def process_job_feed():
         j.raise_for_status()
         job_data = j.json()
         if job_data is not None:
-            job_data['time'] = datetime.fromtimestamp(int(job_data['time']))
-            job_data['time_db'] = job_data['time'].strftime('%Y-%m-%d %H:%M:%S')
+            job_data['time'] = datetime.fromtimestamp(int(job_data['time']), tz=timezone.utc)
             yield job_data

@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-import app.management.hackernews as hackernews
+from app.management import algolia as api
 from app.models import Month, Entry
 
 
@@ -33,7 +33,7 @@ class Command(BaseCommand):
         existing = 0
         for user in users:
             print(f'Processing {user}...')
-            months = hackernews.get_months(user)
+            months = api.get_months(user)
             current = months[0]
             current_month = Month.objects.get_or_create(current[0], current[1])
             print(f'\tProcessing {current_month}...')
@@ -57,7 +57,7 @@ class Command(BaseCommand):
     def process_entries_for_month(self, month):
         total = 0
         existing = 0
-        for entry in hackernews.get_data(str(month.hn_id)):
+        for entry in api.get_data(month.hn_id):
             total += 1
             e, c = Entry.objects.get_or_create(
                 hn_id=entry[0],
