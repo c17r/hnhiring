@@ -36,7 +36,7 @@ class Command(BaseCommand):
         rv += ('<br/>' * 2)
         if 'url' in job:
             rv += '<a href="{0}">{0}</a>'.format(job['url'])
-        else:
+        elif 'text' in job:
             rv += job['text']
         rv += ('<br/>' * 2)
         rv += '[Job Feed]'
