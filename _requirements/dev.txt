@@ -6,122 +6,128 @@
 #
 -e git+https://github.com/alsoicode/django-medusa.git@v0.3.2#egg=django-medusa
     # via -r _requirements/prod.in
-anyio==3.7.0
+anyio==4.1.0
     # via jupyter-server
 appnope==0.1.3
-    # via
-    #   ipykernel
-    #   ipython
-argon2-cffi==21.3.0
-    # via
-    #   jupyter-server
-    #   nbclassic
-    #   notebook
+    # via ipykernel
+argon2-cffi==23.1.0
+    # via jupyter-server
 argon2-cffi-bindings==21.2.0
     # via argon2-cffi
-arrow==1.2.3
+arrow==1.3.0
     # via isoduration
 asgiref==3.7.2
     # via django
-asttokens==2.2.1
+asttokens==2.4.1
     # via stack-data
+async-lru==2.0.4
+    # via jupyterlab
 attrs==23.1.0
-    # via jsonschema
-backcall==0.2.0
-    # via ipython
+    # via
+    #   jsonschema
+    #   referencing
+babel==2.13.1
+    # via jupyterlab-server
 beautifulsoup4==4.12.2
     # via
     #   -r _requirements/prod.in
     #   nbconvert
-bleach==6.0.0
+bleach==6.1.0
     # via nbconvert
-certifi==2023.5.7
+certifi==2023.11.17
     # via
     #   requests
     #   sentry-sdk
-cffi==1.15.1
+cffi==1.16.0
     # via argon2-cffi-bindings
-charset-normalizer==3.1.0
+charset-normalizer==3.3.2
     # via requests
-comm==0.1.3
+comm==0.2.0
     # via ipykernel
-debugpy==1.6.7
+debugpy==1.8.0
     # via ipykernel
 decorator==5.1.1
     # via ipython
 defusedxml==0.7.1
     # via nbconvert
-django==3.2.19
+django==3.2.23
     # via
     #   -r _requirements/prod.in
     #   django-extensions
     #   django-medusa
 django-extensions==3.2.3
     # via -r _requirements/dev.in
-executing==1.2.0
+executing==2.0.1
     # via stack-data
-fastjsonschema==2.17.1
+fastjsonschema==2.19.0
     # via nbformat
 fqdn==1.5.1
     # via jsonschema
-idna==3.4
+idna==3.6
     # via
     #   anyio
     #   jsonschema
     #   requests
-ipykernel==6.23.3
-    # via
-    #   nbclassic
-    #   notebook
-ipython==8.14.0
+ipykernel==6.27.1
+    # via jupyterlab
+ipython==8.18.1
     # via ipykernel
-ipython-genutils==0.2.0
-    # via
-    #   nbclassic
-    #   notebook
 isoduration==20.11.0
     # via jsonschema
-jedi==0.18.2
+jedi==0.19.1
     # via ipython
 jinja2==3.1.2
     # via
     #   jupyter-server
-    #   nbclassic
+    #   jupyterlab
+    #   jupyterlab-server
     #   nbconvert
-    #   notebook
+json5==0.9.14
+    # via jupyterlab-server
 jsonpointer==2.4
     # via jsonschema
-jsonschema[format-nongpl]==4.17.3
+jsonschema[format-nongpl]==4.20.0
     # via
     #   jupyter-events
+    #   jupyterlab-server
     #   nbformat
-jupyter-client==8.3.0
+jsonschema-specifications==2023.11.1
+    # via jsonschema
+jupyter-client==8.6.0
     # via
     #   ipykernel
     #   jupyter-server
-    #   nbclassic
     #   nbclient
-    #   notebook
-jupyter-core==5.3.1
+jupyter-core==5.5.0
     # via
     #   ipykernel
     #   jupyter-client
     #   jupyter-server
-    #   nbclassic
+    #   jupyterlab
     #   nbclient
     #   nbconvert
     #   nbformat
-    #   notebook
-jupyter-events==0.6.3
+jupyter-events==0.9.0
     # via jupyter-server
-jupyter-server==2.7.0
+jupyter-lsp==2.2.1
+    # via jupyterlab
+jupyter-server==2.11.1
     # via
-    #   nbclassic
+    #   jupyter-lsp
+    #   jupyterlab
+    #   jupyterlab-server
+    #   notebook
     #   notebook-shim
 jupyter-server-terminals==0.4.4
     # via jupyter-server
-jupyterlab-pygments==0.2.2
+jupyterlab==4.0.9
+    # via notebook
+jupyterlab-pygments==0.3.0
     # via nbconvert
+jupyterlab-server==2.25.2
+    # via
+    #   jupyterlab
+    #   notebook
 markupsafe==2.1.3
     # via
     #   jinja2
@@ -131,58 +137,47 @@ matplotlib-inline==0.1.6
     # via
     #   ipykernel
     #   ipython
-mistune==3.0.1
+mistune==3.0.2
     # via nbconvert
-nbclassic==1.0.0
-    # via notebook
-nbclient==0.8.0
+nbclient==0.9.0
     # via nbconvert
-nbconvert==7.6.0
+nbconvert==7.11.0
+    # via jupyter-server
+nbformat==5.9.2
     # via
     #   jupyter-server
-    #   nbclassic
-    #   notebook
-nbformat==5.9.0
-    # via
-    #   jupyter-server
-    #   nbclassic
     #   nbclient
     #   nbconvert
-    #   notebook
-nest-asyncio==1.5.6
-    # via
-    #   ipykernel
-    #   nbclassic
-    #   notebook
-notebook==6.5.4
+nest-asyncio==1.5.8
+    # via ipykernel
+notebook==7.0.6
     # via -r _requirements/dev.in
 notebook-shim==0.2.3
-    # via nbclassic
-overrides==7.3.1
+    # via
+    #   jupyterlab
+    #   notebook
+overrides==7.4.0
     # via jupyter-server
-packaging==23.1
+packaging==23.2
     # via
     #   ipykernel
     #   jupyter-server
+    #   jupyterlab
+    #   jupyterlab-server
     #   nbconvert
 pandocfilters==1.5.0
     # via nbconvert
 parso==0.8.3
     # via jedi
-pexpect==4.8.0
+pexpect==4.9.0
     # via ipython
-pickleshare==0.7.5
-    # via ipython
-platformdirs==3.8.0
+platformdirs==4.0.0
     # via jupyter-core
-prometheus-client==0.17.0
-    # via
-    #   jupyter-server
-    #   nbclassic
-    #   notebook
-prompt-toolkit==3.0.38
+prometheus-client==0.19.0
+    # via jupyter-server
+prompt-toolkit==3.0.41
     # via ipython
-psutil==5.9.5
+psutil==5.9.6
     # via ipykernel
 ptyprocess==0.7.0
     # via
@@ -192,31 +187,34 @@ pure-eval==0.2.2
     # via stack-data
 pycparser==2.21
     # via cffi
-pygments==2.15.1
+pygments==2.17.2
     # via
     #   ipython
     #   nbconvert
-pyrsistent==0.19.3
-    # via jsonschema
 python-dateutil==2.8.2
     # via
     #   arrow
     #   jupyter-client
 python-json-logger==2.0.7
     # via jupyter-events
-pytz==2023.3
+pytz==2023.3.post1
     # via django
-pyyaml==6.0
+pyyaml==6.0.1
     # via jupyter-events
-pyzmq==25.1.0
+pyzmq==25.1.1
     # via
     #   ipykernel
     #   jupyter-client
     #   jupyter-server
-    #   nbclassic
-    #   notebook
+referencing==0.31.0
+    # via
+    #   jsonschema
+    #   jsonschema-specifications
+    #   jupyter-events
 requests==2.31.0
-    # via -r _requirements/prod.in
+    # via
+    #   -r _requirements/prod.in
+    #   jupyterlab-server
 rfc3339-validator==0.1.4
     # via
     #   jsonschema
@@ -225,12 +223,13 @@ rfc3986-validator==0.1.1
     # via
     #   jsonschema
     #   jupyter-events
-send2trash==1.8.2
+rpds-py==0.13.1
     # via
-    #   jupyter-server
-    #   nbclassic
-    #   notebook
-sentry-sdk==1.26.0
+    #   jsonschema
+    #   referencing
+send2trash==1.8.2
+    # via jupyter-server
+sentry-sdk==1.37.1
     # via -r _requirements/prod.in
 six==1.16.0
     # via
@@ -240,29 +239,27 @@ six==1.16.0
     #   rfc3339-validator
 sniffio==1.3.0
     # via anyio
-soupsieve==2.4.1
+soupsieve==2.5
     # via beautifulsoup4
 sqlparse==0.4.4
     # via django
-stack-data==0.6.2
+stack-data==0.6.3
     # via ipython
-terminado==0.17.1
+terminado==0.18.0
     # via
     #   jupyter-server
     #   jupyter-server-terminals
-    #   nbclassic
-    #   notebook
 tinycss2==1.2.1
     # via nbconvert
-tornado==6.3.2
+tornado==6.3.3
     # via
     #   ipykernel
     #   jupyter-client
     #   jupyter-server
-    #   nbclassic
+    #   jupyterlab
     #   notebook
     #   terminado
-traitlets==5.9.0
+traitlets==5.14.0
     # via
     #   comm
     #   ipykernel
@@ -271,19 +268,20 @@ traitlets==5.9.0
     #   jupyter-core
     #   jupyter-events
     #   jupyter-server
+    #   jupyterlab
     #   matplotlib-inline
-    #   nbclassic
     #   nbclient
     #   nbconvert
     #   nbformat
-    #   notebook
+types-python-dateutil==2.8.19.14
+    # via arrow
 uri-template==1.3.0
     # via jsonschema
-urllib3==2.0.3
+urllib3==2.1.0
     # via
     #   requests
     #   sentry-sdk
-wcwidth==0.2.6
+wcwidth==0.2.12
     # via prompt-toolkit
 webcolors==1.13
     # via jsonschema
@@ -291,7 +289,7 @@ webencodings==0.5.1
     # via
     #   bleach
     #   tinycss2
-websocket-client==1.6.1
+websocket-client==1.6.4
     # via jupyter-server
-werkzeug==2.3.6
+werkzeug==3.0.1
     # via -r _requirements/dev.in
