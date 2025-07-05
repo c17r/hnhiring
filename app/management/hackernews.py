@@ -145,6 +145,14 @@ def process_job_feed() -> Iterator[dict]:
         j = requests.get("https://hacker-news.firebaseio.com/v0/item/{}.json".format(job_id))
         j.raise_for_status()
         job_data = j.json()
-        if job_data is not None:
+        if _validate_job(job_data):
             job_data['time'] = datetime.fromtimestamp(int(job_data['time']), tz=timezone.utc)
             yield job_data
+
+
+def _validate_job(job: dict|None) -> bool:
+    if not job: return False
+    title = job.get('title', '')
+    url = job.get('url', '')
+    text = job.get('text', '')
+    return len(title) > 0 and (len(url) > 0 or len(text) > 0)
